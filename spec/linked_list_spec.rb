@@ -16,6 +16,7 @@ RSpec.describe 'A Linked List' do
 
   it 'can append a node' do
     @linked_list.append("doop")
+
     expect(@linked_list.head).to be_instance_of(Node)
     expect(@linked_list.head.data).to eq("doop")
     expect(@linked_list.head.next_node).to be nil
@@ -24,6 +25,7 @@ RSpec.describe 'A Linked List' do
   it 'can append a node twice' do
     @linked_list.append("doop")
     @linked_list.append("poop")
+
     expect(@linked_list.head).to be_instance_of(Node)
     expect(@linked_list.head.data).to eq("doop")
     expect(@linked_list.head.next_node.data).to eq("poop")
@@ -31,15 +33,21 @@ RSpec.describe 'A Linked List' do
 
   it 'can count length of list' do
     @linked_list.append("doop")
+
     expect(@linked_list.count).to eq(1)
+
     @linked_list.append("poop")
+
     expect(@linked_list.count).to eq(2)
   end
 
   it 'can turn list nodes into string' do
     @linked_list.append("doop")
+
     expect(@linked_list.to_string).to eq("doop")
+
     @linked_list.append("poop")
+
     expect(@linked_list.to_string).to eq("doop poop")
   end
 
@@ -47,6 +55,7 @@ RSpec.describe 'A Linked List' do
     @linked_list.append("plop")
     @linked_list.append("suu")
     @linked_list.prepend("dop")
+
     expect(@linked_list.to_string).to eq('dop plop suu')
     expect(@linked_list.count).to eq(3)
   end
@@ -69,6 +78,40 @@ RSpec.describe 'A Linked List' do
 
     expected = "dop plop woo suu"
     expect(@linked_list.to_string).to eq(expected)
+  end
+
+  it 'can find nodes by position' do
+    @linked_list.append('deep')
+    @linked_list.append('woo')
+    @linked_list.append('shi')
+    @linked_list.append('shu')
+    @linked_list.append('blop')
+
+    expect(@linked_list.find(2, 1)).to eq('shi')
+    expect(@linked_list.find(1, 3)).to eq('woo shi shu')
+  end
+
+  it 'can identify if node data exists' do
+    @linked_list.append('deep')
+    @linked_list.append('woo')
+    @linked_list.append('shi')
+    @linked_list.append('shu')
+    @linked_list.append('blop')
+
+    expect(@linked_list.includes?("deep")).to be true
+    expect(@linked_list.includes?("dep")).to be false
+  end
+
+  it 'can pop out last node in list' do
+    @linked_list.append('deep')
+    @linked_list.append('woo')
+    @linked_list.append('shi')
+    @linked_list.append('shu')
+    @linked_list.append('blop')
+
+    expect(@linked_list.pop).to eq('blop')
+    expect(@linked_list.pop).to eq('shu')
+    expect(@linked_list.to_string).to eq('deep woo shi')
   end
 
 end
