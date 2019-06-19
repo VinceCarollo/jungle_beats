@@ -48,17 +48,22 @@ class LinkedList
   end
 
   def insert(pos, data)
+    parent = get_parent(pos)
+    if !parent.nil?
+      node = Node.new(data)
+      node.next_node = parent.next_node
+      parent.next_node = node
+    end
+  end
+
+  def get_parent(pos)
     parent = @head
     pos_count = 0
     until pos_count == pos - 1
       pos_count += 1
       parent = parent.next_node
     end
-    if !parent.nil?
-      node = Node.new(data)
-      node.next_node = parent.next_node
-      parent.next_node = node
-    end
+    parent
   end
 
   def find(pos, length)
@@ -69,14 +74,18 @@ class LinkedList
         pointer = pointer.next_node
         count += 1
       end
-      return_sentence = []
-      length.times do
-        break if pointer.nil?
-        return_sentence << pointer.data
-        pointer = pointer.next_node
-      end
-      return_sentence.join(" ")
+      get_string(pointer, length)
     end
+  end
+
+  def get_string(pointer, length)
+    return_sentence = []
+    length.times do
+      break if pointer.nil?
+      return_sentence << pointer.data
+      pointer = pointer.next_node
+    end
+    return_sentence.join(" ")
   end
 
   def includes?(data)
@@ -98,14 +107,17 @@ class LinkedList
     elsif count == 0
       nil
     else
-      pointer = @head
-      (count - 2).times do
-        pointer = pointer.next_node
-      end
-      last_node = pointer.next_node
-      pointer.next_node = nil
-      last_node.data
+      initiate_pop
     end
   end
 
+  def initiate_pop
+    pointer = @head
+    (count - 2).times do
+      pointer = pointer.next_node
+    end
+    last_node = pointer.next_node
+    pointer.next_node = nil
+    last_node.data
+  end
 end
