@@ -1,4 +1,5 @@
 require './lib/linked_list'
+require 'pry'
 
 RSpec.describe 'A Linked List' do
 
@@ -32,6 +33,8 @@ RSpec.describe 'A Linked List' do
   end
 
   it 'can count length of list' do
+    expect(@linked_list.count).to eq(0)
+
     @linked_list.append("doop")
 
     expect(@linked_list.count).to eq(1)
@@ -80,6 +83,15 @@ RSpec.describe 'A Linked List' do
     expect(@linked_list.to_string).to eq(expected)
   end
 
+  it 'cant insert nodes into position that doesnt exists' do
+    @linked_list.append("plop")
+    @linked_list.insert(2, 'woo')
+
+    expected = "plop"
+    expect(@linked_list.to_string).to eq(expected)
+    expect(@linked_list.count).to eq(1)
+  end
+
   it 'can find nodes by position' do
     @linked_list.append('deep')
     @linked_list.append('woo')
@@ -89,6 +101,19 @@ RSpec.describe 'A Linked List' do
 
     expect(@linked_list.find(2, 1)).to eq('shi')
     expect(@linked_list.find(1, 3)).to eq('woo shi shu')
+  end
+
+  it 'cant find nodes with invalid position' do
+    @linked_list.append('deep')
+
+    expect(@linked_list.find(2, 1)).to be nil
+  end
+
+  it 'gives whole list if extra length is given' do
+    @linked_list.append('deep')
+    @linked_list.append('woo')
+
+    expect(@linked_list.find(0, 10)).to eq('deep woo')
   end
 
   it 'can identify if node data exists' do
@@ -112,6 +137,17 @@ RSpec.describe 'A Linked List' do
     expect(@linked_list.pop).to eq('blop')
     expect(@linked_list.pop).to eq('shu')
     expect(@linked_list.to_string).to eq('deep woo shi')
+  end
+
+  it 'doesnt error when popping out nodes more than list length' do
+    @linked_list.append('deep')
+    @linked_list.append('woo')
+
+    expect(@linked_list.pop).to eq('woo')
+    expect(@linked_list.pop).to eq('deep')
+    expect(@linked_list.pop).to be nil
+    expect(@linked_list.to_string).to eq('')
+    expect(@linked_list.count).to eq(0)
   end
 
 end
