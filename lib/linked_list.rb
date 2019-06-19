@@ -1,6 +1,3 @@
-require 'node'
-require 'pry'
-
 class LinkedList
   attr_accessor :head
 
