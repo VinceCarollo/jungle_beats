@@ -59,4 +59,40 @@ class LinkedList
     parent.next_node = node
   end
 
+  def find(pos, length)
+    pointer = @head
+    count = 0
+    until pos == count
+      pointer = pointer.next_node
+      count += 1
+    end
+    return_sentence = []
+    length.times do
+      return_sentence << pointer.data
+      pointer = pointer.next_node
+    end
+    return_sentence.join(" ")
+  end
+
+  def includes?(data)
+    pointer = @head
+    all_data = []
+    all_data << pointer.data
+    until pointer.next_node.nil?
+      pointer = pointer.next_node
+      all_data << pointer.data
+    end
+    all_data.include?(data)
+  end
+
+  def pop
+    pointer = @head
+    (count - 2).times do
+      pointer = pointer.next_node
+    end
+    last_node = pointer.next_node
+    pointer.next_node = nil
+    last_node.data
+  end
+
 end
