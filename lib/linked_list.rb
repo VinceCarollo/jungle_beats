@@ -1,4 +1,6 @@
 require 'pry'
+require './lib/node'
+
 class LinkedList
   attr_accessor :head
 
